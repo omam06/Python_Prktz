@@ -85,3 +85,22 @@ def outer():
 
 greet = outer()
 greet()  # prints 5, not 0 — proves it's a live reference, not a copy
+print()
+
+nums = (1, 2, 2, 3, 2)
+print(nums.count(2))  
+print(nums.index(3))  
+print()
+
+colors = (1, 2, 3, 2, 4, 2)
+print(colors.count(2))
+print()
+
+#unpack year (first item), weather (last item),
+# and everything in between into middle_stuff, all in one line.
+record = (2024, "January", 15, "Monday", "Sunny") 
+year, *middle_stuff, weather = record
+print(year)
+print(*middle_stuff)
+print(weather)
+print()
