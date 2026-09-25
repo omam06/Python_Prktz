@@ -66,5 +66,29 @@ def increment():
     print(count)
 increment()
 print(count)
+print()
 
+#lmbdaXfilter
+numbers = [1, 2, 3, 4, 5]
+ogbeee = map(lambda x: x ** 2, numbers)
+print(list(ogbeee))
+iyooo = filter(lambda x: x > 10, map(lambda x: x ** 2, numbers))
+print(list(iyooo))
+print()
 
+#Tuples are commonly used when a function needs to return more than one value. Write a function min_max(numbers) that takes a list of numbers 
+# and returns both the minimum and maximum as a tuple. E.g. min_max([3, 7, 1, 9, 4]) should return (1, 9).
+#  (Hint: you can use the built-ins min() and max() — just return both together separated by a comma.)
+def min_max(anambers):
+    return min(anambers), max(anambers)
+print(min_max([3, 7, 1, 9, 4]))
+print()
+
+#Write a recursive function power(base, exp) that calculates base raised to exp (like base ** exp), without using the ** operator. 
+# E.g. power(2, 4) should return 16. Identify your base case first.
+def power(base, exp):
+    if exp == 1:
+        return base
+    else:
+        return base * power(base, exp - 1)
+print(power(2, 4))
