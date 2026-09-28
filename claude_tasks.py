@@ -92,3 +92,82 @@ def power(base, exp):
     else:
         return base * power(base, exp - 1)
 print(power(2, 4))
+print()
+
+#Write a recursive function count_down_list(lst) that takes a list and returns the total count of items in it — 
+# basically reimplementing len() yourself, recursively, without using len().
+#E.g. count_down_list([10, 20, 30, 40]) should return 4
+def count_down_list(lst):
+    if lst == []:
+        return 0
+    else:
+        return 1 + count_down_list(lst[1:])
+print(count_down_list([10, 20, 30, 40])) 
+print()
+
+#Write a recursive function count_evens(lst) that returns how many even numbers are in a list.
+#  E.g. count_evens([1, 2, 3, 4]) returns 2.
+# This one has a twist: an item contributes 1 only if it's even, and 0 otherwise. 
+# Start with the base case, then think about what lst[0] contributes in each situation.
+# An if/else in the recursive branch will help.
+def count_evens(lst):
+    if lst == []:
+        return 0
+    elif lst[0] % 2 == 0:
+        return 1 + count_evens(lst[1:]) # If lst[0] is even, it adds 1, plus the count of evens in the rest.
+    else:
+        return 0 + count_evens(lst[1:])  # If lst[0] is odd, it adds 0, so the answer is just the count of evens in the rest. 
+print(count_evens([1, 2, 3, 4, 5, 6]))
+print()
+
+# Write a recursive function count_word(words, target) that returns how many times target appears in a list of strings. 
+# For example, count_word(["hi", "yo", "hi"], "hi") returns 2
+def count_word(words, target):
+    if words == []:
+        return 0
+    elif words[0] == target:
+        return 1 + count_word(words[1:], target)
+    else:
+        return 0 + count_word(words[1:], target)
+print(count_word(["hi", "yo", "hi"], "hi"))
+print()
+
+#Write a recursive count_long(words) that returns how many words in a list have more than 3 letters. 
+# For example, count_long(["hi", "python", "cat", "engineer"]) returns 2
+def count_long(words):
+    if words == []:
+        return 0
+    elif len(words[0]) > 3:
+        return 1 + count_long(words[1:])
+    else:
+        return 0 + count_long(words[1:])
+print(count_long(["hi", "python", "cat", "engineer"]))
+print()
+
+#write a list comprehension that 
+# returns only the words longer than 4 characters.
+words = ["apple", "kiwi", "banana", "fig"]
+longer = []
+for word in words:
+    if len(word) > 4:
+        longer.append(word)
+print(longer)
+jabor = [word for word in words if len(word) > 4]
+print(jabor)
+print()
+
+#given ,
+#  write code that uses .index() to find the position of "two" in the tuple, and print it.
+data = (1, "two", 3.0, True)
+print(data.index('two'))
+print()
+
+#write a function describe(**kwargs) that returns True if the keyword argument status was passed with the value "active", and False otherwise.
+# That includes the case where status wasn't passed at all.
+
+def describe(**kwargs):
+    if kwargs.get('status') == 'active':
+        return True
+    else:
+        return False
+print(describe(status="active"))
