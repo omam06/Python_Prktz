@@ -166,8 +166,9 @@ print()
 # That includes the case where status wasn't passed at all.
 
 def describe(**kwargs):
-    if kwargs.get('status') == 'active':
-        return True
-    else:
-        return False
+    return kwargs.get('status') == 'active'
+
 print(describe(status="active"))
+print(describe(status='offline'))
+print(describe(city= 'bueno aires'))
+print(describe(club= 'active'))
