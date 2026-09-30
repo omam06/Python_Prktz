@@ -31,3 +31,21 @@ print(python_course)
 def total_unique_students(set1, set2):
     return len(set1 | set2)
 print(total_unique_students(python_course, web_course))
+print()
+
+#3
+member1_books = {'book1', 'book2', 'book3', 'book4', 'book5', 'book6'}
+member2_books = {'book5', 'book8', 'book3', 'book9', 'book10', 'book12', 'book6'}
+member1_books.add('book21')
+member1_books.remove('book4')
+member2_books.update({'book13', 'book14', 'book17'})
+print(member1_books ^ member2_books)
+print()
+#Write a function safe_remove(book_set, book) that removes book from book_set if it's there, 
+# and does nothing (no crash) if it isn't. 
+# Test it once with a book that exists in the set, and once with a book that doesn't.
+def safe_remove(book_set, book):
+    book_set.discard(book)
+    print(book_set)
+safe_remove(member1_books, 'book5')
+safe_remove(member2_books, 'book44')
