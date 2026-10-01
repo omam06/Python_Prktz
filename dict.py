@@ -46,7 +46,44 @@ print(joy)
 print(list(joy))
 print(type(job))
 print(type(joy))
+print('grade' not in student)
 print()
 
-#copy()
 
+# COpying a dict makes a new dict
+original = {"name": "Ada", "tags": ["python"]}
+copy1 = original.copy() #shallow copy leaks through shared list - modify 2nd list will affect original
+print(copy1)
+
+original['name'] = 'Ade'    #replacing(not appending) never affects the 2nd dict
+copy1['name'] = 'Joy'
+print(original)
+print(copy1)
+print()
+
+copy1['tags'].append('rust')   #modify the list here changes orininal too
+copy1['tags'][0] = 'go'
+print(copy1)
+print(original)
+print()
+
+#deep copying so list in original becomes independent
+info = {"club": "Betis", "player(s)": ["Isco"]}
+copy2 = info.copy()
+copy2['player(s)'] = info['player(s)'].copy()    #if info had 2 keys with list as values, you copy both lists separately
+copy2['player(s)'].append('Antony')
+print(info['player(s)'])
+print(copy2['player(s)'])
+print(info)
+print(copy2)
+print(info['club'] is copy2['club'])
+print(info['player(s)'] is not copy2['player(s)'])
+print()
+#for large dicts, use inbuilt function
+pro ={'city': 'London', 'teams': ['Chelsea', 'Arsenal'], 'competitions': ['UCL', 'PL']}
+
+import copy
+quo = copy.deepcopy(pro)
+quo['teams'].append('West Ham')
+print(pro)
+print(quo)
