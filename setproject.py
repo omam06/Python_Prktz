@@ -36,10 +36,12 @@ print()
 #3
 member1_books = {'book1', 'book2', 'book3', 'book4', 'book5', 'book6'}
 member2_books = {'book5', 'book8', 'book3', 'book9', 'book10', 'book12', 'book6'}
-member1_books.add('book21')
+member1_books.add('book21')             #append
 member1_books.remove('book4')
-member2_books.update({'book13', 'book14', 'book17'})
-print(member1_books ^ member2_books)
+member2_books.update({'book13', 'book14', 'book17'})   #extend in lists
+print(member1_books)
+print(member2_books)
+print(member1_books ^ member2_books)  #opposite of intersection& - combination w/o common items
 print()
 #Write a function safe_remove(book_set, book) that removes book from book_set if it's there, 
 # and does nothing (no crash) if it isn't. 

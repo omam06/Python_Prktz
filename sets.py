@@ -42,6 +42,7 @@ listed_people = list(people)
 listed_people.insert(1, 'Chioma')
 people = tuple(listed_people)
 print(people)
+print(set(people))
 
 #write a line that checks if 25 is in big_set and prints True or False.
 big_set = {10, 20, 30, 40, 50}

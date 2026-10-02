@@ -14,9 +14,12 @@ book['published_year'] = 1986
 print(book)
 
 #4
-print(book.get('publisher'))
+#print(book['publisher'])   this will crash as no 'publisher' key
 
-print(book.get('publisher', 'Key not in dictionary'))
+#with get(), there'll be no crash 
+print(book.get('publisher'))            # will print None
+
+print(book.get('publisher', 'Key not in dictionary'))        #yo statement will print if key dont exist
 
 #5
 print('author' in book)
@@ -37,6 +40,7 @@ print()
 for value in book.values():
     print(value, '\n')
 print(book.keys())
+print(list(book.keys()))
 print(book.values())
 print()
 
@@ -79,7 +83,7 @@ print(copy2)
 print(info['club'] is copy2['club'])
 print(info['player(s)'] is not copy2['player(s)'])
 print()
-#for large dicts, use inbuilt function
+#for large dicts, use inbuilt function to deepcopy
 pro ={'city': 'London', 'teams': ['Chelsea', 'Arsenal'], 'competitions': ['UCL', 'PL']}
 
 import copy
