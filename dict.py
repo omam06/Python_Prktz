@@ -91,3 +91,51 @@ quo = copy.deepcopy(pro)
 quo['teams'].append('West Ham')
 print(pro)
 print(quo)
+print()
+
+#nested dict
+student = {
+    "name": "Ada",
+    "age": 22,
+    "grades": [90, 85, 95],
+    "address": {
+        "city": "Lagos",
+        "state": "Lagos State"
+    }
+}
+print(student)
+print()
+
+student['address']['city'] = 'Chicago'
+student['address']['state'] = 'Illinois'
+student['name'] = 'King Von'
+student['address']['apartment'] = 'O Block'
+print(student)
+
+print(student['address'].get('apartment'))  #get() works same way
+print(student['address'].get('aparte', 'Dont exist! X'))
+
+print(student.pop('grades'))   #pop() - same work 
+print(student)
+print(student['address'].pop('class', 'No such key'))
+print()
+
+#to rename a key, pop it into new value of key
+student['bodies'] = student.pop('age')
+print(student)
+print()
+
+#Asserting that an error gets raissed
+def check_positive(n):
+    if n < 0:         #if bug so > 0, so it dont flag -ve nums, then assert str will read
+        raise ValueError("must be positive")
+    return n
+print(check_positive(-2))    #if error raised, no need to check try
+                            #if return n
+# Write a test using the try/except/assert False pattern,
+#  proving that check_positive(-5) raises ValueError.
+try:
+    check_positive(-2)
+    assert False, 'ValueError expected but not raised'
+except ValueError:
+    pass   #confirms error is caught, no action needed. you can rejected +=1 (increase a counter, etc)
