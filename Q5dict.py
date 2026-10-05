@@ -32,9 +32,9 @@ order = []
 
 assert reserve_stock({"pen": 8}, [("pen", 3), ("pen", 3)]) == {'pen': 2}
 try:
-    reserve_stock({"pen": 5}, [("pen", 3), ("pen", 3)])
+    reserve_stock(stock, [("pen", 3), ("pen", 3)])
     assert False, 'Didnt catch ValueError for insufficient stock'
 except ValueError:
     pass
-    assert stock[item] == {'pen': 5}
+assert stock == {'pen': 5}
 
