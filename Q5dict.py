@@ -38,3 +38,16 @@ except ValueError:
     pass
 assert stock == {'pen': 5}
 
+try:
+    reserve_stock(stock, [('pencil', 3)])
+    assert False, 'Expected ValueError for Unknown item but got none'
+except ValueError:
+    pass
+
+try:
+    reserve_stock(stock, [('pen', -4)])
+    assert False, 'Expected ValueError for order quantity of negative value'
+except ValueError:
+    pass
+
+
