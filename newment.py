@@ -3,7 +3,7 @@ resources = [
   {"id": "R002", "name": "Keyboard", "category": "Accessories", "total": 5, "available": 5},
   {"id": "R003", "name": "Headset", "category": "Accessories", "total": 3, "available": 3}
 ]
-fellows = {"F001": "Ada", "F002": "John", "F003": "Grace"}
+fellows = {"F001": "Ada", "F002": "John", "F003": "Grace"}  
 borrow_records = []
 borrow_log = []           #logs every successful borowwing
 
@@ -12,28 +12,15 @@ def add_resource(resource_id, name, category, total):
     available = total
     for each_resource in resources:
         if each_resource['id'] == resource_id:
-            raise ValueError("ID already exists!")      #reject duplicate IDs
-    
+            raise ValueError("ID already exists!")         
     new_resource = {'id': resource_id, 'name': name, 'category': category, 'total': total, 'available': available}
     resources.append(new_resource)
-    return resources
-print(add_resource('R004', 'Mouse', 'Electronics', 7))
-print()
-
-try:
-    add_resource("R001", "Tablet", "Electronics", 2)
-except ValueError:
-    print('Rejected: ID alrready exists!')
-
-print()
+    
 
 #list resources
 def list_resources():
     for each_resource in resources:
         print(each_resource)
-list_resources()
-
-print()
 
 #subsequent requirements will need
 def find_resource(resource_id):
@@ -41,10 +28,6 @@ def find_resource(resource_id):
         if each_resource['id'] == resource_id:
             return each_resource
     return None
-print(find_resource('R004'))
-print(find_resource('R007'))
-
-print()
 
 # borrow
 def borrow_resource(fellow_id, resource_id, quantity):
@@ -72,19 +55,6 @@ def borrow_resource(fellow_id, resource_id, quantity):
        
     borrow_log.append({'fellow_id': fellow_id, "resource_id": resource_id, "quantity": quantity})
 
-borrow_resource("F001", "R001", 2)       # required demonstration 1
-print(find_resource("R001"))
-print(borrow_records)
-print(borrow_log)
-try:                                             #to prove that rejected attempts dont mutate state
-    borrow_resource("F003", "R002", 6)
-except ValueError:
-    print('Rejected: Sorry, Insufficient Quantity')   
-print(find_resource('R002'))         
-print(borrow_records)                #all remain same
-print(borrow_log)
-
-print()
 
 #returns 
 def return_resource(fellow_id, resource_id, quantity):
@@ -96,9 +66,8 @@ def return_resource(fellow_id, resource_id, quantity):
     if isinstance(quantity, int) is False:
         raise ValueError("Rejected: Quantity requested is NOT a valid number")
     if quantity <= 0:
-        raise ValueError("Rejected: Sorry, Insufficient stock!")
-    #in place of insuffucuent stock
-
+        raise ValueError("Rejected: Quantity requested MUST be greater than Zero")
+    
     matching_record = None
     for record in borrow_records:
         if record["fellow_id"] == fellow_id and record["resource_id"] == resource_id:
@@ -110,23 +79,7 @@ def return_resource(fellow_id, resource_id, quantity):
     resource['available'] += quantity
     if matching_record['quantity'] == 0:
         borrow_records.remove(matching_record)
-borrow_resource("F002", "R002", 3)           # required demonstration 2
-try:
-    borrow_resource("F003", "R003", 4)
-except ValueError:
-    print()
-print(find_resource("R002"))       
-
-return_resource("F001", "R001", 1)               # required demonstration 3
-print(find_resource("R001"))     
-print(borrow_records)              
-
-try:            # required demonstration 5
-    return_resource("F002", "R002", 4)
-except ValueError:
-    print('Rejected: Sorry, Insufficient stock!')
-print(find_resource("R002"))
-print(borrow_records)              
+           
 
 #search/filter
 def search_resources(search_name, filter_category):
@@ -140,9 +93,6 @@ def search_resources(search_name, filter_category):
                 continue
         found_resources.append(each_resource)
     return found_resources
-print(search_resources('LAPtop', ''))    #required demonstration 6
-
-print()
 
 #report
 def generate_report():
@@ -155,11 +105,11 @@ def generate_report():
         available_units = available_units + each_resource["available"]
         
         if each_resource["available"] < 3:
-            low_stock_items.append(each_resource["name"])
+            low_stock_items.append(f"{each_resource['name']} ({each_resource['available']})")
             
-    borrowed_units = total_units - available_units      # Calculate currently borrowed units
+    borrowed_units = total_units - available_units     
 
- #using simple tally dictionary to count borrowed items
+    #using simple tally dictionary to count borrowed items
     borrow_tallies = {}
     for each_resource in resources:
         borrow_tallies[each_resource["id"]] = 0 
@@ -181,13 +131,129 @@ def generate_report():
                 matched_resource = find_resource(item_id)
                 if matched_resource is not None:
                     most_borrowed_items.append(matched_resource["name"])
-print()
-generate_report()
+    print("--- INVENTORY REPORT ---")                
+    print("Total units:", total_units)
+    print("Available units:", available_units)
+    print("Borrowed units:", borrowed_units)
+    if low_stock_items:
+        print("Low stock:", ", ".join(low_stock_items))
+    else:
+        print("Low stock: None")
+    if most_borrowed_items:
+        print("Most borrowed:", ", ".join(most_borrowed_items), f"({highest_borrow_count})")
+    else:
+        print("Most borrowed: No resources currently borrowed")
 
-    #  Print out the final compiled metrics simply
-print("--- SYSTEM SUMMARY REPORT ---")
-print("Total Portfolio Inventory Units:", total_units)
-print("Total Units Available in Stock :", available_units)
-print("Total Units Currently Borrowed :", borrowed_units)
-print("Low Stock Resources (<3 units) :", low_stock_items)
-print("Most Borrowed Resource(s)      :", most_borrowed_items)
+#Required Demonstration in Order
+list_resources()                          # starting inventory
+
+borrow_resource("F001", "R001", 2)        # step 1
+print(find_resource("R001"))
+
+borrow_resource("F002", "R002", 3)        # step 2
+print(find_resource("R002"))
+
+return_resource("F001", "R001", 1)        # step 3
+print(find_resource("R001"))
+
+try:                                      # step 4
+    borrow_resource("F003", "R003", 4)
+except ValueError as e:
+    print(e)
+print(find_resource("R003"))
+
+try:                                      # step 5
+    return_resource("F002", "R002", 4)
+except ValueError as e:
+    print(e)
+print(find_resource("R002"))
+
+print(search_resources("LAPtop", ""))     # step 6
+
+print()
+generate_report()                         # step 7
+print()
+
+#EXTRA TESTS
+print(search_resources("", "accessories"))        # category filter
+
+try:                                              # invalid input test
+    borrow_resource("F001", "R001", 2.5)
+except ValueError as e:
+    print(e)
+
+add_resource("R004", "Mouse", "Electronics", 7)   # to add new resource
+list_resources()
+
+try:                                              # to reject duplicate ID 
+    add_resource("R001", "Tablet", "Electronics", 2)
+except ValueError as e:
+    print(e)
+
+
+#to put the program in a menu
+def menu():
+    while True:
+        print()
+        print("Select an operation from the following")
+        print("1. Add Resource")
+        print("2. List Resources")
+        print("3. Borrow Resource")
+        print("4. Return Resource")
+        print("5. Search For a Resource")
+        print("6. See Report")
+        print("0. Exit")
+        choice = input("Choose an Option: ")
+        if choice == "1":
+            try:
+                resource_id = input("Resource ID: ")
+                name = input("Resource Name: ")
+                category = input("Category: ")
+                total = int(input("Total: "))
+                add_resource(resource_id, name, category, total)
+                print("Resource Added")
+            except ValueError as e:
+                print(e)
+        elif choice == "2":
+            print("Here's a List of All Resources:")
+            try:
+                list_resources()
+            except ValueError as e:
+                print(e)
+        elif choice == "3":
+            try:
+                fellow_id = input("Fellow ID: ")
+                resource_id = input("Resource ID: ")
+                quantity = int(input("Quantity: "))
+                borrow_resource(fellow_id, resource_id, quantity)
+                print("Borrowed successfully.")
+            except ValueError as e:
+                print(e)
+        elif choice == "4":
+            try:
+                fellow_id = input("Fellow ID: ")
+                resource_id = input("Resource ID: ")
+                quantity = int(input("Quantity: "))
+                return_resource(fellow_id, resource_id, quantity)
+                print("Returned successfully.")
+            except ValueError as e:
+                print(e)
+        elif choice == "5":
+            try:
+                search_name = input("Resource Name: ")
+                filter_category = input("Resource Category: ")
+                search_result = search_resources(search_name, filter_category)
+                if search_result:
+                    print(search_result)
+                else:
+                    print("No matches found")
+                
+            except ValueError as e:
+                print(e)
+        elif choice == "6":
+            generate_report()
+        elif choice == "0":
+            break
+        else:
+            print("Invalid Option. Try Again!")
+menu()
