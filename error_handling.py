@@ -59,6 +59,6 @@ def ask_positive_number():
                 return ent
             else:
                 print("Number must be above 0")
-        except:
-            print("please try again")
+        except ValueError:
+            print("You did not enter a valid number. Try again")
 print(ask_positive_number())
